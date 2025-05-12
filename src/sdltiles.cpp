@@ -2691,6 +2691,16 @@ static void CheckMessages()
             }
 
             touch_input_context = *new_input_context;
+            {
+                JNIEnv *env = ( JNIEnv * )SDL_AndroidGetJNIEnv();
+                jobject activity = ( jobject )SDL_AndroidGetActivity();
+                jclass clazz( env->GetObjectClass( activity ) );
+                jstring toast_message = env->NewStringUTF( touch_input_context.get_category() );
+                jmethodID method_id = env->GetMethodID( clazz, "toast", "(Ljava/lang/String;)V" );
+                env->CallVoidMethod( activity, method_id, toast_message );
+                env->DeleteLocalRef( activity );
+                env->DeleteLocalRef( clazz );
+            }
             needupdate = true;
             ui_manager::redraw_invalidated();
         }

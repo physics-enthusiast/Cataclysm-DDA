@@ -2695,7 +2695,7 @@ static void CheckMessages()
                 JNIEnv *env = ( JNIEnv * )SDL_AndroidGetJNIEnv();
                 jobject activity = ( jobject )SDL_AndroidGetActivity();
                 jclass clazz( env->GetObjectClass( activity ) );
-                jstring toast_message = env->NewStringUTF( touch_input_context.get_category().c_str() );
+                jstring toast_message = env->NewStringUTF( touch_input_context.constructor_callsite.file_name() );
                 jmethodID method_id = env->GetMethodID( clazz, "toast", "(Ljava/lang/String;)V" );
                 env->CallVoidMethod( activity, method_id, toast_message );
                 env->DeleteLocalRef( activity );

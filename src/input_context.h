@@ -45,7 +45,10 @@ class input_context
         // Whatever's on top is our current input context.
         static std::list<input_context *> input_context_stack;
 #endif
-
+        input_context() : registered_any_input( false ), category( "default" ),
+            coordinate_input_received( false ), handling_coordinate_input( false ) {
+            throw std::runtime_error("Empty input_context!");
+        }
         // TODO: consider making the curses WINDOW an argument to the constructor, so that mouse input
         // outside that window can be ignored
         explicit input_context( const std::string &category,

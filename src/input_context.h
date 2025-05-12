@@ -10,6 +10,7 @@
 
 #if defined(__ANDROID__)
 #include <list>
+#include <source_location>
 #endif
 
 #include "action.h"
@@ -44,8 +45,8 @@ class input_context
 #if defined(__ANDROID__)
         // Whatever's on top is our current input context.
         static std::list<input_context *> input_context_stack;
-#endif
         std::source_location constructor_callsite = std::source_location::current();
+#endif
 
         input_context() : registered_any_input( false ), category( "default" ),
             coordinate_input_received( false ), handling_coordinate_input( false ) {
